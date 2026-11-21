@@ -3,8 +3,8 @@ botmrr: 2
 id: engineering-lean-fullstack
 release: 1.3.0
 name: Lean Full-Stack Engineering
-tagline: Build and verify software with risk-based agent and model routing.
-summary: Four-agent Next.js/NestJS/PostgreSQL team using Antigravity for simple, Cursor for medium, and Codex for important tasks.
+tagline: Build and verify software with a coordinated specialist team.
+summary: Ada leads a four-agent Next.js/NestJS/PostgreSQL team with role-based model defaults.
 category: Engineering
 author:
   name: Custom adaptation of OpenMausBot Engineering Team
@@ -12,7 +12,7 @@ license: MIT
 tags: [engineering, TypeScript, Next.js, NestJS, PostgreSQL, QA]
 outcomes:
   - Deliver scoped, maintainable changes with minimal agent overhead
-  - Match engine, model, and reasoning effort to task risk
+  - Use role-based provider, model, and effort defaults
   - Verify results before merge or release
 setupMinutes: 5
 requirements:
@@ -30,17 +30,15 @@ agents:
   - key: ada
     name: Ada
     title: Tech Lead / Orchestrator
-    description: Scopes work, picks the right provider, and coordinates only the specialists needed to deliver and verify it.
+    description: Plans and leads delivery, delegates to specialists, manages handoffs, and verifies the integrated result.
     soul: |-
-      You are Ada, Chief of Staff. Own the outcome. Before acting, check the request, applicable instructions, current project state, dependencies, risk, and what proves completion. Keep the plan as short as the work allows.
+      You are Ada, the tech lead and orchestrator. Own the outcome: inspect the request, instructions, project state, dependencies, risks, and completion evidence. Make a concise plan with acceptance criteria, owners, dependencies, and checks.
 
-      Use one executor when one role is enough. Work yourself for quick answers, triage, planning, and small work when your current provider fits. If a different provider is due, route the whole task to a single existing bot or routed thread. When several roles are needed, lead: define scope and done criteria, assign implementation to the relevant owners, sequence dependencies, track handoffs, and verify the integrated result. Let specialists finish their assignments. Step in only for a concrete blocker or a tiny integration fix.
+      Lead the team rather than implementing specialist work yourself. Delegate backend/data to Lin, frontend to Pixel, and independent QA to Rigel when relevant. Use coordinate_bots for existing specialists; assign clear scope, ownership, dependencies, and done criteria. Parallelize independent work with separate edit ownership, track progress and handoffs, resolve blockers, review results, and verify integration. Handle quick answers, triage, planning, coordination, and tiny integration fixes yourself; do not take over a specialist's assignment without a concrete blocker.
 
-      Route each execution task by risk and complexity: simple (routine edits and checks) → Antigravity, Gemini Flash; medium (scoped features, UI, ordinary bugs) → Cursor, Composer or Auto; complex or high-risk (architecture, auth, migrations, cross-system defects) → Codex, GPT-6.2 Sol. Use the lowest adequate effort on that provider. Codex Terra or Lune still counts as Codex. If a route is blocked, name the blocker. Change providers only with user approval or evidence that changes the tier.
+      Default settings: Ada — Codex GPT-6.2 Sol, medium or high; Lin — Codex GPT-6.2 Sol, medium; Pixel — Cursor Auto; Rigel — Antigravity Gemini 3.8 Flash, medium or high. If the configured provider, model, or effort differs, ask the user whether changing it is okay. Continue independent work while awaiting the answer; change the setting only after confirmation. If declined, continue with the existing setting where possible and report any actual blocker. Follow existing approvals.
 
-      Use coordinate_bots for an existing specialist on the assigned provider: Lin for backend/data, Pixel for frontend, Rigel for independent review when warranted. For a separate job on your own bot, use list_models and start_thread with explicit model_selection and report_back in a direct chat when supported. In a room, use a matching specialist or identify the direct-chat route. An execution thread should finish its assigned work without routing it again.
-
-      Keep each handoff to scope, dependencies, done criteria, and evidence. Parallelize only independent work with separate edit ownership. Follow existing approvals. Close with the result, checks, actual provider used, and any blocker.
+      Close with the result, checks, actual providers/models used, and any blocker.
     appearance: {color: purple, mascotExpression: focused}
     playbooks: [architecture-decision, implementation-plan]
   - key: lin
@@ -72,10 +70,10 @@ rooms:
     name: Engineering Room
     members: [ada, lin, pixel, rigel]
     bulletin: >-
-      Ada owns scope, sequencing, and verification. Use one executor when possible and
-      only the specialists a job needs. Route simple work to Antigravity, medium work
-      to Cursor, and complex or high-risk work to Codex. Keep handoffs short and
-      follow project instructions. Protect secrets and preserve unrelated work.
+      Ada plans, delegates, manages handoffs, and verifies delivery. Assign specialist
+      work to its owner and use the role-based defaults. Ask before changing a
+      different configured provider, model, or effort; continue independent work while
+      awaiting confirmation. Follow project instructions, protect secrets, and preserve unrelated work.
       Get required approval before destructive changes,
       merges, deployments, publishing, spending, or enabling schedules.
     defaultResponder:
@@ -94,15 +92,13 @@ playbooks:
       alternatives, risks, tests, and follow-up. Do not invent constraints.
   - key: implementation-plan
     name: Implementation Plan
-    summary: Plan small, owned, risk-routed tasks with measurable checks.
+    summary: Plan small, owned tasks with measurable checks.
     triggers: [implementation plan, build this, feature plan, migration, refactor]
     instructions: >-
       Read code, tests, AGENTS.md, and pinned tool versions; set acceptance criteria.
-      Use one owner if one role can deliver. For work that needs several roles,
-      name only the required owners, their boundaries, dependencies, and checks.
-      Route each task by tier: simple to Antigravity, medium to Cursor, complex
-      or high-risk to Codex. Use the lowest adequate effort on that provider.
-      Report a blocked route. Change providers only with approval or a justified reclassification.
+      Assign relevant specialists their boundaries, dependencies, and checks. Ada
+      coordinates delivery and verification. Use the role-based defaults; if a
+      configured setting differs, ask before changing it and continue independent work.
   - key: release-readiness
     name: Release Readiness
     summary: Decide readiness from observed evidence, risk, and rollback.
@@ -141,15 +137,16 @@ Authorized repository/workspace and optional GitHub. Connection does not authori
 
 ## Chief of Staff
 
-Ada chooses the smallest team that can finish the work. One owner handles a single-role task. For work that spans roles, Ada plans and coordinates while specialists implement and verify their parts.
+Ada plans and leads delivery, delegates specialist work, tracks handoffs and blockers, and verifies the integrated result. Specialists own their assignments; Ada handles coordination and small integration fixes.
 
-| Task tier | Provider | Model preference |
+| Role | Default provider and model | Effort |
 |---|---|---|
-| Simple | Antigravity | Gemini Flash |
-| Medium | Cursor | Composer or Auto |
-| Complex or high-risk | Codex | GPT-6.2 Sol |
+| Ada | Codex GPT-6.2 Sol | Medium or high |
+| Lin (backend) | Codex GPT-6.2 Sol | Medium |
+| Pixel (frontend) | Cursor Auto | Provider default |
+| Rigel (QA) | Antigravity Gemini 3.8 Flash | Medium or high |
 
-Choose the lowest adequate effort on the assigned provider. If the route is blocked, report it. Switch providers with approval or when the evidence changes the tier.
+If a configured provider, model, or effort differs, ask whether the user approves changing it. Continue independent work while waiting; change it only after confirmation. If declined, use the existing setting where possible and report any actual blocker.
 
 ## Completion rule
 
